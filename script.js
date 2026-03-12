@@ -262,7 +262,7 @@ function initParticles() {
  */
 function initScrollAnimations() {
     // Enhanced scroll reveal with more dramatic effects
-    const revealElements = document.querySelectorAll('.reveal, .about-content, .service-card, .timeline-item, .project-card, .stat-item, .certification-card, .contact-item');
+    const revealElements = document.querySelectorAll('.reveal, .about-content, .service-card, .timeline-item, .project-card, .stat-item, .certification-card, .contact-item, .stacked-card, .hero-content, .hero-subtitle, .hero-title, .hero-typed, .hero-description, .hero-cta');
     
     const revealOnScroll = () => {
         const windowHeight = window.innerHeight;
@@ -272,6 +272,21 @@ function initScrollAnimations() {
             const revealPoint = 100;
             
             if (elementTop < windowHeight - revealPoint) {
+                const isHeroElement =
+                    el.classList.contains('hero-content') ||
+                    el.classList.contains('hero-subtitle') ||
+                    el.classList.contains('hero-title') ||
+                    el.classList.contains('hero-typed') ||
+                    el.classList.contains('hero-description') ||
+                    el.classList.contains('hero-cta');
+
+                if (isHeroElement) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.classList.add('active');
+                    return;
+                }
+
                 // Add staggered delay based on index
                 setTimeout(() => {
                     el.style.opacity = '1';
@@ -282,8 +297,23 @@ function initScrollAnimations() {
         });
     };
     
-    // Initial state
+    // Initial state (do not hide hero content)
     revealElements.forEach(el => {
+        const isHeroElement =
+            el.classList.contains('hero-content') ||
+            el.classList.contains('hero-subtitle') ||
+            el.classList.contains('hero-title') ||
+            el.classList.contains('hero-typed') ||
+            el.classList.contains('hero-description') ||
+            el.classList.contains('hero-cta');
+
+        if (isHeroElement) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.transition = 'none';
+            return;
+        }
+
         el.style.opacity = '0';
         el.style.transform = 'translateY(60px) scale(0.95)';
         el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
