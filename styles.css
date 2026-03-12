@@ -2077,8 +2077,7 @@ body {
 
 /* Stacked Cards Scroll Animation - handled by JavaScript */
 
-@media (max-width: 768px) {
-    .stacked-container {
+
         height: auto;
         padding: 30px 15px;
     }
